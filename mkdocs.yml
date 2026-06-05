@@ -28,6 +28,8 @@ nav:
     - Notes: week-01/notes.md
     - Lab Writeup: week-01/lab-writeup.md
     - Diagrams: week-01/diagrams/diagrams.md
+  - Week 02:
+    - Notes: week-02/notes.md
 
 plugins:
   - search
