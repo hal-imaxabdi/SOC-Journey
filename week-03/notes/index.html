@@ -1,0 +1,1473 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Blue Team learning in public — SOC fundamentals, labs, and writeups">
+      
+      
+        <meta name="author" content="Hal Abdi">
+      
+      
+      
+        <link rel="prev" href="../../week-02/notes/">
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.18">
+    
+    
+      
+        <title>Notes - Halima's SOC Learning Journal</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.66ac8b77.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#week-3-notes-networking-firewalls-ids-and-ips" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Halima&#39;s SOC Learning Journal" class="md-header__button md-logo" aria-label="Halima's SOC Learning Journal" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Halima's SOC Learning Journal
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Notes
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../week-01/notes/" class="md-tabs__link">
+          
+  
+  Week 01
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../week-02/notes/" class="md-tabs__link">
+          
+  
+  Week 02
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  Week 03
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Halima&#39;s SOC Learning Journal" class="md-nav__button md-logo" aria-label="Halima's SOC Learning Journal" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Halima's SOC Learning Journal
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Week 01
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Week 01
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../week-01/notes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Notes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../week-01/lab-writeup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab Writeup
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../week-01/diagrams/diagrams/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Diagrams
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Week 02
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Week 02
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../week-02/notes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Notes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Week 03
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Week 03
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Notes
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Notes
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-networking-matters-for-cybersecurity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Networking Matters for Cybersecurity
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-a-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a Network?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network Components
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#types-of-networks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Types of Networks
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#message-delivery-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      Message Delivery Types
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-protocols" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network Protocols
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-osi-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      The OSI Model
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-tcpip-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      The TCP/IP Model
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#encapsulation-and-de-encapsulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Encapsulation and De-encapsulation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ip-addresses-and-mac-addresses" class="md-nav__link">
+    <span class="md-ellipsis">
+      IP Addresses and MAC Addresses
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wireshark-seeing-network-traffic-in-real-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      Wireshark — Seeing Network Traffic in Real Time
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#firewalls" class="md-nav__link">
+    <span class="md-ellipsis">
+      Firewalls
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Firewalls">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#types-of-firewalls" class="md-nav__link">
+    <span class="md-ellipsis">
+      Types of Firewalls
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dmz-demilitarized-zone" class="md-nav__link">
+    <span class="md-ellipsis">
+      DMZ — Demilitarized Zone
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#firewall-rules-and-default-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Firewall Rules and Default Policies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#firewall-deployment-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      Firewall Deployment Types
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#windows-firewall-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Windows Firewall Demo
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ids-intrusion-detection-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      IDS — Intrusion Detection System
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="IDS — Intrusion Detection System">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#detection-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Detection Methods
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#types-of-ids" class="md-nav__link">
+    <span class="md-ellipsis">
+      Types of IDS
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ips-intrusion-prevention-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      IPS — Intrusion Prevention System
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-segmentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network Segmentation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#defense-in-depth" class="md-nav__link">
+    <span class="md-ellipsis">
+      Defense in Depth
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-i-practiced-this-week" class="md-nav__link">
+    <span class="md-ellipsis">
+      What I Practiced This Week
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-i-want-to-revisit" class="md-nav__link">
+    <span class="md-ellipsis">
+      What I Want to Revisit
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-networking-matters-for-cybersecurity" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Networking Matters for Cybersecurity
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-a-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      What is a Network?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network Components
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#types-of-networks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Types of Networks
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#message-delivery-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      Message Delivery Types
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-protocols" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network Protocols
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-osi-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      The OSI Model
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-tcpip-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      The TCP/IP Model
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#encapsulation-and-de-encapsulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Encapsulation and De-encapsulation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ip-addresses-and-mac-addresses" class="md-nav__link">
+    <span class="md-ellipsis">
+      IP Addresses and MAC Addresses
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wireshark-seeing-network-traffic-in-real-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      Wireshark — Seeing Network Traffic in Real Time
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#firewalls" class="md-nav__link">
+    <span class="md-ellipsis">
+      Firewalls
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Firewalls">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#types-of-firewalls" class="md-nav__link">
+    <span class="md-ellipsis">
+      Types of Firewalls
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dmz-demilitarized-zone" class="md-nav__link">
+    <span class="md-ellipsis">
+      DMZ — Demilitarized Zone
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#firewall-rules-and-default-policies" class="md-nav__link">
+    <span class="md-ellipsis">
+      Firewall Rules and Default Policies
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#firewall-deployment-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      Firewall Deployment Types
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#windows-firewall-demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Windows Firewall Demo
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ids-intrusion-detection-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      IDS — Intrusion Detection System
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="IDS — Intrusion Detection System">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#detection-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Detection Methods
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#types-of-ids" class="md-nav__link">
+    <span class="md-ellipsis">
+      Types of IDS
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ips-intrusion-prevention-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      IPS — Intrusion Prevention System
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-segmentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Network Segmentation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#defense-in-depth" class="md-nav__link">
+    <span class="md-ellipsis">
+      Defense in Depth
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-i-practiced-this-week" class="md-nav__link">
+    <span class="md-ellipsis">
+      What I Practiced This Week
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-i-want-to-revisit" class="md-nav__link">
+    <span class="md-ellipsis">
+      What I Want to Revisit
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="week-3-notes-networking-firewalls-ids-and-ips">Week 3 Notes — Networking, Firewalls, IDS, and IPS</h1>
+<p>This week was very technical. Networking is one of those topics where if you do not understand the foundation, everything else in cybersecurity becomes harder. We also got into firewalls properly, and did hands-on work in Wireshark and on the Windows Defender Firewall. A lot to cover, but it clicked once the analogies started making sense.</p>
+<hr />
+<h2 id="why-networking-matters-for-cybersecurity">Why Networking Matters for Cybersecurity</h2>
+<p>You cannot protect something you do not understand. Almost every attack — phishing, man-in-the-middle, DDoS, data exfiltration — happens over a network. If you want to work in a SOC, understanding how traffic flows is not optional. It is the foundation.</p>
+<p>Networking shows up in:
+- Identifying what type of attack is happening and where
+- Analyzing logs and packet captures
+- Understanding firewalls, routers, and switches
+- Pen testing (reconnaissance)
+- Cloud security
+- Almost every certification you will take</p>
+<hr />
+<h2 id="what-is-a-network">What is a Network?</h2>
+<p>A network is simply two or more devices connected to each other for the purpose of communication or sharing resources. Your phone connected to your laptop via hotspot is a network. Your home router connecting five devices is a network.</p>
+<p>The internet is not a separate thing — it is just the largest network in existence, made up of millions of smaller networks all connected together. Nobody owns the internet, but organizations like the IETF (Internet Engineering Task Force) help maintain the rules that keep it running.</p>
+<hr />
+<h2 id="network-components">Network Components</h2>
+<p><strong>End devices</strong> — Where data originates and where it arrives. Your phone, laptop, PC. These are the sources and destinations.</p>
+<p><strong>Intermediary devices</strong> — The devices in between that move data around:
+- <strong>Switch</strong> — Connects devices within a local network, uses MAC addresses
+- <strong>Router</strong> — Directs traffic between networks, uses IP addresses
+- <strong>Firewall</strong> — Controls what traffic is allowed in or out
+- <strong>Wireless Access Point</strong> — Provides Wi-Fi connectivity</p>
+<p><strong>Network media</strong> — The medium through which data travels:
+- <strong>Cables (copper)</strong> — Use electrical signals, example: USB, Ethernet
+- <strong>Fiber optic</strong> — Use pulses of light, used for long-distance and internet backbone connections
+- <strong>Wireless</strong> — Use electromagnetic waves and radio frequencies, example: Wi-Fi, Bluetooth</p>
+<hr />
+<h2 id="types-of-networks">Types of Networks</h2>
+<p><strong>By size:</strong>
+- Small/Home Office (SOHO) — A few devices in a home or small office
+- Medium to Large — Organizations with multiple locations
+- Worldwide — The internet</p>
+<p><strong>By geography:</strong>
+- <strong>LAN (Local Area Network)</strong> — Covers a small area like a home or office building
+- <strong>WAN (Wide Area Network)</strong> — Covers a large area, connecting multiple LANs together</p>
+<p>The internet is essentially a massive collection of LANs and WANs all interconnected.</p>
+<hr />
+<h2 id="message-delivery-types">Message Delivery Types</h2>
+<p>When a device sends data, there are three ways it can be delivered:</p>
+<p><strong>Unicast</strong> — One-to-one. You send a message to one specific person. Like a private DM on WhatsApp. The recipient is a specific address.</p>
+<p><strong>Multicast</strong> — One-to-many, with replies possible. Like a WhatsApp group. You send to multiple people and they can all respond. Everyone in the group sees everyone else's messages.</p>
+<p><strong>Broadcast</strong> — One-to-all, no reply expected back to the group. Like a WhatsApp broadcast list. You send to everyone on the list, but if they reply, they reply directly to you — others do not see their reply. Like a radio or TV station.</p>
+<hr />
+<h2 id="network-protocols">Network Protocols</h2>
+<p>Protocols are the rules that define how communication happens across a network. Without protocols, devices from different manufacturers would not be able to talk to each other.</p>
+<p>When you type a URL into your browser, protocols define exactly how that request is formatted, sent, received, and responded to.</p>
+<p>Common protocols to know:
+- <strong>HTTP</strong> (HyperText Transfer Protocol) — Port 80, how websites are accessed, unencrypted
+- <strong>HTTPS</strong> (HTTP Secure) — Port 443, encrypted version of HTTP
+- <strong>SSH</strong> — Port 22, secure remote access to systems
+- <strong>FTP</strong> — Port 21, file transfers
+- <strong>SMTP</strong> — Port 25, sending emails
+- <strong>DNS</strong> — Translates domain names (google.com) into IP addresses that computers can use</p>
+<p>There are 65,535 ports in total. Different services run on different ports. Knowing the common port numbers matters for log analysis and understanding network traffic.</p>
+<hr />
+<h2 id="the-osi-model">The OSI Model</h2>
+<p>The OSI (Open Systems Interconnection) model breaks down how network communication works into 7 layers. Each layer has a specific job.</p>
+<p>Mnemonic from class — starting from the bottom: <strong>Please Do Not Throw Sausage Pizza Away</strong></p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Name</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Physical</td>
+<td>Transmits raw bits (0s and 1s) over cables or wireless</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Data Link</td>
+<td>Organizes bits into frames, uses MAC addresses, handles switches</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Network</td>
+<td>Handles logical addressing (IP addresses) and routing</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Transport</td>
+<td>Ensures reliable delivery, checks for errors</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Session</td>
+<td>Manages the connection between devices</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Presentation</td>
+<td>Formats/translates data so it can be understood</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Application</td>
+<td>Where user-facing protocols live (HTTP, DNS, SMTP)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Binary and how computers read data:</strong> Computers do not understand English. Everything is converted to 0s and 1s. A 0 means no electrical pulse, a 1 means there is a pulse. Everything you type, every file you open, every website you visit — the computer is processing all of it as combinations of zeros and ones.</p>
+<hr />
+<h2 id="the-tcpip-model">The TCP/IP Model</h2>
+<p>The TCP/IP model is simpler — it combines the 7 OSI layers into 4 layers and is the model actually used on the internet today.</p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Name</th>
+<th>What it covers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Network Access</td>
+<td>Physical connections and hardware</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Internet</td>
+<td>IP addressing and routing</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Transport</td>
+<td>Reliable delivery (TCP) or fast delivery (UDP)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Application</td>
+<td>Everything the user interacts with (HTTP, DNS, etc.)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="encapsulation-and-de-encapsulation">Encapsulation and De-encapsulation</h2>
+<p><strong>Encapsulation</strong> — When you send a request (like loading google.com), your data travels <em>down</em> through the layers from Application to Physical. At each layer, additional information is added to the data (like a header saying where it is going and how to handle it).</p>
+<p><strong>De-encapsulation</strong> — When the data arrives at its destination, it travels <em>up</em> through the layers from Physical to Application. At each layer, the added information is stripped off until the original data is delivered to the application that needs it.</p>
+<p>Think of it like packing a letter: you write the letter (application), put it in an envelope (transport), address it (network), hand it to the post office (physical). When it arrives, everything gets unwrapped in reverse until the person has just the letter.</p>
+<hr />
+<h2 id="ip-addresses-and-mac-addresses">IP Addresses and MAC Addresses</h2>
+<p><strong>IP Address</strong> — A logical address assigned to a device when it connects to a network. It can change. This is how devices find each other on the internet. Like a home address that can change if you move.</p>
+<p><strong>MAC Address</strong> — A physical address burned into the hardware of the device itself. It does not change. Every network card has a unique MAC address. Like a serial number stamped on the device.</p>
+<p>To find your IP address:
+- Windows: open Command Prompt and type <code>ipconfig</code>
+- Linux/Mac: open Terminal and type <code>ifconfig</code></p>
+<p>The loopback address (127.0.0.1) is a special IP address that always points back to your own device. Also called localhost or home address.</p>
+<hr />
+<h2 id="wireshark-seeing-network-traffic-in-real-time">Wireshark — Seeing Network Traffic in Real Time</h2>
+<p>Wireshark is a packet capture tool. It lets you see every packet of data moving through your network in real time. This is a core tool for network analysis and incident response.</p>
+<p><strong>What we did in class:</strong></p>
+<ol>
+<li>Opened Wireshark and selected the Wi-Fi interface</li>
+<li>Clicked the blue shark fin icon to start capturing traffic</li>
+<li>Opened a browser and visited an HTTP site (the vulnerable login page at testasp.net)</li>
+<li>Typed in a username and password on the HTTP site</li>
+<li>Stopped the capture</li>
+<li>Filtered by typing <code>http</code> in the display filter</li>
+<li>Found the login request, right-clicked → Follow → HTTP Stream</li>
+<li>Scrolled down and saw the username and password in plain text</li>
+</ol>
+<p><strong>What this demonstrated:</strong> HTTP is not encrypted. Every piece of data you send over HTTP — including usernames and passwords — is visible to anyone who can capture that traffic. This is a serious vulnerability.</p>
+<p><strong>Then we filtered for HTTPS traffic (port 443):</strong>
+- Right-clicked a packet → Follow → HTTP Stream
+- The content was completely unreadable — just cipher text
+- This is because HTTPS uses TLS (Transport Layer Security) to encrypt all data</p>
+<p><strong>The takeaway:</strong> Never type sensitive information into a website that uses plain HTTP. Always check that the URL starts with HTTPS before entering any passwords or personal data.</p>
+<hr />
+<h2 id="firewalls">Firewalls</h2>
+<p>A firewall is a logical barrier that enforces a set of rules to control the flow of network traffic. It decides what is allowed in and what is blocked.</p>
+<p>Think of it like a bouncer at a wedding — they check whether you are on the list, and either let you in or turn you away.</p>
+<h3 id="types-of-firewalls">Types of Firewalls</h3>
+<p><strong>Packet Filtering Firewall</strong>
+Operates at the router level. Checks each packet against a set of rules based on IP address and port number. Simple and fast but limited — it can be fooled if someone spoofs an IP address. It does not understand context, just the basic details of each packet.</p>
+<p><strong>Proxy Firewall</strong>
+Sits between the user's device and the internet. The firewall receives the request on your behalf, checks it, then forwards it if it passes. The destination server never communicates directly with your device — only with the proxy. Like switching cars mid-journey to shake someone following you.</p>
+<p><strong>Web Application Firewall (WAF)</strong>
+Specifically designed for HTTP and HTTPS traffic. Sits between a web application and the internet. Checks whether requests are legitimate or malicious. This is what projects like the WAF HomeLab in my portfolio use.</p>
+<p><strong>Stateful Inspection Firewall</strong>
+Tracks the entire connection, not just individual packets. It knows who connected, when, and what they have been doing. Like a bouncer who remembers faces — if you left to use the bathroom and come back without your invitation, they still recognize you and let you in.</p>
+<p><strong>Next Generation Firewall (NGFW)</strong>
+Combines traditional firewall functions with an IPS (Intrusion Prevention System). Not only does it block unauthorized traffic, it can actively prevent and respond to attacks. Like a bouncer who is also a police officer — they can arrest people, not just turn them away.</p>
+<h3 id="dmz-demilitarized-zone">DMZ — Demilitarized Zone</h3>
+<p>A DMZ is a neutral network zone that sits between the public internet and the private internal network. Public-facing services (like web servers) live here, so if they are compromised, the attacker still cannot reach the internal private network.</p>
+<p>Think of it like a reception area in an office building. Visitors from outside can sit in the reception — they are inside the building, but they cannot access the private offices or boardrooms. The internal staff can come to reception and meet them there, but the visitor never enters the private areas.</p>
+<p>Traffic from inside (private network) to the DMZ has little restriction. Traffic from outside (internet) to the private network is blocked entirely.</p>
+<h3 id="firewall-rules-and-default-policies">Firewall Rules and Default Policies</h3>
+<p>Firewalls work by following rules. These rules define what is allowed and what is denied based on:
+- Source and destination IP address
+- Port number
+- Protocol (TCP/UDP)
+- Direction (inbound/outbound)</p>
+<p><strong>Default deny policy:</strong> If a packet does not match any rule that explicitly allows it, it is automatically blocked. This is the safest default — deny everything unless explicitly permitted.</p>
+<h3 id="firewall-deployment-types">Firewall Deployment Types</h3>
+<ul>
+<li><strong>Network-based</strong> — Installed at the perimeter of the network, protects everything behind it</li>
+<li><strong>Host-based</strong> — Installed on individual devices (like Windows Defender Firewall), protects that specific device</li>
+<li><strong>Cloud</strong> — Deployed in cloud environments to protect cloud-based resources</li>
+</ul>
+<hr />
+<h2 id="windows-firewall-demo">Windows Firewall Demo</h2>
+<p>We used <code>wf.msc</code> (Windows Defender Firewall with Advanced Security) to create an outbound rule that blocks HTTP traffic on port 80.</p>
+<p><strong>Steps:</strong>
+1. Press Windows key + R, type <code>wf.msc</code>, press Enter
+2. Click Outbound Rules on the left
+3. Click New Rule under Actions
+4. Select Port → Next
+5. Select TCP, type <code>80</code> in Specific remote ports → Next
+6. Select Block the connection → Next
+7. Leave all profiles checked → Next
+8. Name it BlockHTTP → Finish</p>
+<p><strong>Result:</strong> After enabling the rule, trying to visit an HTTP site returned "internet access is blocked." Disabling the rule allowed the site to load again.</p>
+<hr />
+<h2 id="ids-intrusion-detection-system">IDS — Intrusion Detection System</h2>
+<p>An IDS monitors network traffic and system activity for signs of malicious behavior. When it detects something suspicious, it raises an alarm so a human analyst can investigate.</p>
+<p>Key point: an IDS detects and alerts. It does not automatically stop anything.</p>
+<h3 id="detection-methods">Detection Methods</h3>
+<p><strong>Signature-based detection (Misuse detection)</strong>
+Looks for known attack patterns — patterns it has seen before. Like a bouncer who has memorized the tactics of known troublemakers. Very effective against known attacks, but completely blind to new ones (zero-day attacks).</p>
+<p>Advantage: high accuracy for known threats
+Disadvantage: cannot detect attacks it has never seen before</p>
+<p><strong>Anomaly-based detection</strong>
+First defines what "normal" looks like for the network (a baseline). Then raises an alert whenever something deviates from that baseline. Like coming home and noticing your lights are off even though you always leave them on — something is wrong.</p>
+<p>Advantage: can detect new, unknown attacks
+Disadvantage: can produce false positives if normal activity changes</p>
+<p><strong>Hybrid detection</strong>
+Combines both signature and anomaly detection. If either method flags something, an alert is raised.</p>
+<h3 id="types-of-ids">Types of IDS</h3>
+<ul>
+<li><strong>Host-based IDS (HIDS)</strong> — Installed on a single device, monitors that specific machine</li>
+<li><strong>Network-based IDS (NIDS)</strong> — Monitors traffic across the entire network</li>
+</ul>
+<hr />
+<h2 id="ips-intrusion-prevention-system">IPS — Intrusion Prevention System</h2>
+<p>An IPS does everything an IDS does, but goes one step further — it actively prevents attacks, not just detects them.</p>
+<p>IDS: detects and alerts
+IPS: detects, alerts, and blocks</p>
+<p>Like a bouncer who is also a police officer. They do not just turn people away — they can arrest them so they cannot try again.</p>
+<p>An IPS can use signature-based, anomaly-based, policy-based, and protocol analysis-based detection methods.</p>
+<hr />
+<h2 id="network-segmentation">Network Segmentation</h2>
+<p>Network segmentation is dividing a network into smaller, isolated sections. Each section can operate independently.</p>
+<p>Why this matters: if one segment is compromised, the attacker cannot automatically reach other segments. It is like quarantine — you isolate the infected area to prevent it from spreading.</p>
+<p>Benefits:
+- <strong>Improved security</strong> — Contains breaches to a smaller area
+- <strong>Better performance</strong> — Less traffic congestion within each segment
+- <strong>Simplified management</strong> — Smaller networks are easier to monitor and manage</p>
+<p><strong>Physical segmentation</strong> — Separate hardware for each segment
+<strong>Logical segmentation</strong> — Uses software (like VLANs) to separate traffic on the same physical hardware</p>
+<hr />
+<h2 id="defense-in-depth">Defense in Depth</h2>
+<p>Defense in depth means using multiple layers of security rather than relying on one. If one layer fails, the others are still protecting the asset.</p>
+<p>Like a house with a gate, CCTV, an alarm system, a deadbolt lock, and a biometric scanner. An attacker has to defeat every layer. Each layer makes it harder.</p>
+<p>Common layers:
+- Firewall
+- IDS/IPS
+- Antivirus
+- Encryption
+- Strong passwords and MFA
+- Regular updates and patching
+- User training</p>
+<hr />
+<h2 id="what-i-practiced-this-week">What I Practiced This Week</h2>
+<ul>
+<li>Captured live network traffic using Wireshark</li>
+<li>Observed HTTP credentials transmitted in plain text on a vulnerable login site</li>
+<li>Compared encrypted HTTPS traffic (unreadable cipher text) vs unencrypted HTTP</li>
+<li>Created a Windows Defender Firewall outbound rule using wf.msc to block port 80</li>
+<li>Verified the rule worked by attempting to access an HTTP site and seeing it blocked</li>
+<li>Disabled the rule and confirmed the site loaded again</li>
+</ul>
+<hr />
+<h2 id="what-i-want-to-revisit">What I Want to Revisit</h2>
+<ul>
+<li>iptables on Linux — the demo ran into network issues but the concept of blocking port 80 from the command line is important</li>
+<li>TLS handshake — I want to understand exactly how HTTPS sets up an encrypted connection</li>
+<li>VLAN configuration — how logical network segmentation is set up in practice</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.top", "search.suggest"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.3220b9d7.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1249 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Blue Team learning in public — SOC fundamentals, labs, and writeups">
+      
+      
+        <meta name="author" content="Hal Abdi">
+      
+      
+      
+        <link rel="prev" href="../../week-01/diagrams/diagrams/">
+      
+      
+        <link rel="next" href="../../week-03/notes/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.18">
+    
+    
+      
+        <title>Notes - Halima's SOC Learning Journal</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.66ac8b77.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#week-2-notes-cryptography-encryption-and-hashing" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Halima&#39;s SOC Learning Journal" class="md-header__button md-logo" aria-label="Halima's SOC Learning Journal" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Halima's SOC Learning Journal
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Notes
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="black"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../week-01/notes/" class="md-tabs__link">
+          
+  
+  Week 01
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  Week 02
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../week-03/notes/" class="md-tabs__link">
+          
+  
+  Week 03
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Halima&#39;s SOC Learning Journal" class="md-nav__button md-logo" aria-label="Halima's SOC Learning Journal" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Halima's SOC Learning Journal
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Week 01
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Week 01
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../week-01/notes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Notes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../week-01/lab-writeup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Lab Writeup
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../week-01/diagrams/diagrams/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Diagrams
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Week 02
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Week 02
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Notes
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Notes
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#cryptography" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cryptography
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#symmetric-encryption" class="md-nav__link">
+    <span class="md-ellipsis">
+      Symmetric Encryption
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Symmetric Encryption">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#caesar-cipher" class="md-nav__link">
+    <span class="md-ellipsis">
+      Caesar Cipher
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-symmetric-encryption-is-weak" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Symmetric Encryption is Weak
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#asymmetric-encryption" class="md-nav__link">
+    <span class="md-ellipsis">
+      Asymmetric Encryption
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Asymmetric Encryption">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-asymmetric-encryption-is-stronger" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Asymmetric Encryption is Stronger
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hashing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hashing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Hashing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-a-hash-actually-is" class="md-nav__link">
+    <span class="md-ellipsis">
+      What a Hash Actually Is
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practicing-with-hashcalc" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practicing with HashCalc
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hashing-algorithms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hashing Algorithms
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hash-collisions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hash Collisions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-websites-use-hashing-for-passwords" class="md-nav__link">
+    <span class="md-ellipsis">
+      How Websites Use Hashing for Passwords
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#salting-and-peppering" class="md-nav__link">
+    <span class="md-ellipsis">
+      Salting and Peppering
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verifying-file-downloads-using-hashes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verifying File Downloads Using Hashes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-differences-encryption-vs-hashing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Differences: Encryption vs Hashing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-i-practiced-this-week" class="md-nav__link">
+    <span class="md-ellipsis">
+      What I Practiced This Week
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-i-want-to-revisit" class="md-nav__link">
+    <span class="md-ellipsis">
+      What I Want to Revisit
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Week 03
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Week 03
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../week-03/notes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Notes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#cryptography" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cryptography
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#symmetric-encryption" class="md-nav__link">
+    <span class="md-ellipsis">
+      Symmetric Encryption
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Symmetric Encryption">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#caesar-cipher" class="md-nav__link">
+    <span class="md-ellipsis">
+      Caesar Cipher
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-symmetric-encryption-is-weak" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Symmetric Encryption is Weak
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#asymmetric-encryption" class="md-nav__link">
+    <span class="md-ellipsis">
+      Asymmetric Encryption
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Asymmetric Encryption">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-asymmetric-encryption-is-stronger" class="md-nav__link">
+    <span class="md-ellipsis">
+      Why Asymmetric Encryption is Stronger
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hashing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hashing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Hashing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-a-hash-actually-is" class="md-nav__link">
+    <span class="md-ellipsis">
+      What a Hash Actually Is
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practicing-with-hashcalc" class="md-nav__link">
+    <span class="md-ellipsis">
+      Practicing with HashCalc
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hashing-algorithms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hashing Algorithms
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hash-collisions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hash Collisions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-websites-use-hashing-for-passwords" class="md-nav__link">
+    <span class="md-ellipsis">
+      How Websites Use Hashing for Passwords
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#salting-and-peppering" class="md-nav__link">
+    <span class="md-ellipsis">
+      Salting and Peppering
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verifying-file-downloads-using-hashes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Verifying File Downloads Using Hashes
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-differences-encryption-vs-hashing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Key Differences: Encryption vs Hashing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-i-practiced-this-week" class="md-nav__link">
+    <span class="md-ellipsis">
+      What I Practiced This Week
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-i-want-to-revisit" class="md-nav__link">
+    <span class="md-ellipsis">
+      What I Want to Revisit
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="week-2-notes-cryptography-encryption-and-hashing">Week 2 Notes — Cryptography, Encryption, and Hashing</h1>
+<p>These are my notes from week 2 of the bootcamp. This week was very hands-on — we used CyberChef and HashCalc to actually do the things we were learning about, not just read about them. That made a big difference in understanding.</p>
+<hr />
+<h2 id="cryptography">Cryptography</h2>
+<p>Cryptography is the method of communicating in the presence of an attacker or a third party. The goal is to have a conversation where only the intended recipient understands what is being said.</p>
+<p>Think of it this way: if two people are speaking Yoruba in a room full of people who only understand English, they can have a full conversation and nobody else knows what they are saying. That is cryptography in action. The "language switch" is the encryption, and only the person who understands Yoruba can decrypt it.</p>
+<p>Two terms you need to know:</p>
+<p><strong>Plain text</strong> — The original, readable message. Normal English that anyone can read.</p>
+<p><strong>Cipher text</strong> — The encrypted version. It looks like gibberish until you convert it back.</p>
+<p><strong>Encryption</strong> is the process of converting plain text into cipher text.
+<strong>Decryption</strong> is the reverse — converting cipher text back into plain text.</p>
+<hr />
+<h2 id="symmetric-encryption">Symmetric Encryption</h2>
+<p>Symmetric encryption uses one key for both encryption and decryption. The same key that locks the message is the same key that unlocks it.</p>
+<h3 id="caesar-cipher">Caesar Cipher</h3>
+<p>The simplest example of symmetric encryption is the Caesar cipher. The idea is straightforward: you shift each letter of the alphabet forward by a set number of steps, and that number is your key.</p>
+<p>Example with a key of 2:
+- A becomes C
+- B becomes D
+- T becomes V
+- The word "the" becomes "vjg"</p>
+<p>To decrypt, you just reverse it — count the same number of steps backward.</p>
+<p>We practiced this on <strong>CyberChef</strong> (cyberchef.io). The steps were:
+1. Type your plain text in the Input box
+2. Search for ROT13 under Operations and drag it into the Recipe
+3. Change the amount (the key) to whatever number you want
+4. The output box shows your cipher text automatically</p>
+<p>ROT13 means "rotate 13 times" — so the key is 13. But you can change it to any number.</p>
+<p>One thing worth knowing: since there are only 26 letters in the alphabet, once you rotate 26 times you end up back at the start. So a key of 0 and a key of 26 give you the exact same result. Same with key 1 and key 27. It repeats every 26 steps.</p>
+<h3 id="why-symmetric-encryption-is-weak">Why Symmetric Encryption is Weak</h3>
+<p>Two problems:</p>
+<p><strong>Problem 1 — Key sharing.</strong> If I encrypt a message and send it to you, I also have to tell you the key so you can decrypt it. But if someone intercepts the message telling you the key, they can decrypt it too.</p>
+<p><strong>Problem 2 — Brute force.</strong> Because there are only 25 possible keys (1 through 25), an attacker can just try all of them. We actually did this in class — you paste the cipher text into a Caesar cipher brute force tool and it tries every possible key at once. You just scroll through the results and find the one that makes sense. It takes seconds.</p>
+<p>This is why symmetric encryption is not recommended for serious use.</p>
+<hr />
+<h2 id="asymmetric-encryption">Asymmetric Encryption</h2>
+<p>Asymmetric encryption solves the problems of symmetric encryption by using two different keys instead of one.</p>
+<ul>
+<li><strong>Public key</strong> — This one is shared with everyone. You can give it to anybody.</li>
+<li><strong>Private key</strong> — This one stays with you. You never share it.</li>
+</ul>
+<p>Here is how it works:</p>
+<ol>
+<li>I generate both keys using CyberChef (Generate PGP Key Pair under Operations → Public Key)</li>
+<li>I share my public key with everybody — post it in the group chat, put it on my website, whatever</li>
+<li>If you want to send me a private message, you take my public key and use it to encrypt your message</li>
+<li>You send me the encrypted message (cipher text)</li>
+<li>I decrypt it using my private key</li>
+</ol>
+<p>The important thing: <strong>the public key can only encrypt. It cannot decrypt.</strong> Only the private key can decrypt. So even though everyone has my public key, nobody can read messages that were encrypted with it — only I can, because only I have the private key.</p>
+<p>We practiced this on CyberChef too:
+- To encrypt: drag PGP Encrypt into the Recipe, paste the public key, type your plain text
+- To decrypt: drag PGP Decrypt into the Recipe, paste the private key, paste the cipher text</p>
+<p>When someone tries to decrypt using the public key instead of the private key, CyberChef just throws an error. It will not work. That is the whole point.</p>
+<h3 id="why-asymmetric-encryption-is-stronger">Why Asymmetric Encryption is Stronger</h3>
+<p>Because there is no need to share a secret key. I share my public key openly and that is fine — it can only encrypt. The private key never leaves my hands, so there is nothing for an attacker to intercept. And unlike the Caesar cipher with only 25 possible keys, asymmetric encryption keys are mathematically complex enough that brute forcing them is not practical.</p>
+<hr />
+<h2 id="hashing">Hashing</h2>
+<p>Hashing is different from encryption in one very important way: <strong>it only goes in one direction.</strong></p>
+<p>With encryption, you can go from plain text to cipher text, and back again. Hashing does not work like that. You take your data, run it through a hashing function, and get a fixed value called a hash. But you cannot take that hash and reverse it back into the original data.</p>
+<h3 id="what-a-hash-actually-is">What a Hash Actually Is</h3>
+<p>A hash is a fixed alphanumeric value (letters and numbers) generated from the contents of a file or a piece of text. Every file has a unique hash based on what is inside it.</p>
+<p>The jollof rice analogy from class explains it well: smoky jollof has a specific smell. That smell is the hash. If you add garlic to the pot, the smell changes — even though the jollof still looks the same from the outside. The hash is the same way. Change anything in the file, even a single space, and you get a completely different hash.</p>
+<h3 id="practicing-with-hashcalc">Practicing with HashCalc</h3>
+<p>We used HashCalc to see this in action:</p>
+<ol>
+<li>Open HashCalc, change Data Format to Text String</li>
+<li>Make sure only MD5 is checked</li>
+<li>Type TechCrush (capital T, capital C)</li>
+<li>Click Calculate — you get a hash value starting with 95EA and ending in 0458</li>
+<li>Now add a space after TechCrush and calculate again</li>
+<li>Completely different hash — even though all you added was one invisible space</li>
+</ol>
+<p>We also did it with files:
+1. Change Data Format to File
+2. Create a text file, type "Today's Thursday's class." (exact text, capital T, full stop at end)
+3. Load the file into HashCalc, calculate the hash
+4. Add another full stop to the file, save it, calculate again
+5. Different hash</p>
+<p>This is how you verify file integrity — if the hash matches, the file is unchanged. If it does not match, something was modified.</p>
+<h3 id="hashing-algorithms">Hashing Algorithms</h3>
+<p>There is more than one way to hash. Different algorithms produce hashes of different lengths:</p>
+<table>
+<thead>
+<tr>
+<th>Algorithm</th>
+<th>Full Name</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MD5</td>
+<td>Message Digest 5</td>
+<td>Shortest hash, not recommended</td>
+</tr>
+<tr>
+<td>SHA-1</td>
+<td>Secure Hash Algorithm 1</td>
+<td>Longer than MD5</td>
+</tr>
+<tr>
+<td>SHA-256</td>
+<td>Secure Hash Algorithm 256</td>
+<td>Recommended for most uses</td>
+</tr>
+<tr>
+<td>SHA-384</td>
+<td>Secure Hash Algorithm 384</td>
+<td>Longer still</td>
+</tr>
+<tr>
+<td>SHA-512</td>
+<td>Secure Hash Algorithm 512</td>
+<td>Longest of these five</td>
+</tr>
+</tbody>
+</table>
+<p>When you calculate the same file using all three algorithms at once in HashCalc, you can clearly see that the lengths are different. Same file, same content, but each algorithm produces a different length of hash.</p>
+<h3 id="hash-collisions">Hash Collisions</h3>
+<p>A hash collision is when two different files with different contents produce the same hash. This should not happen — different contents should always produce different hashes.</p>
+<p>MD5 has a known problem with hash collisions. This means it is possible for two completely different files to end up with the same MD5 hash, which defeats the purpose of using hashing for integrity checking.</p>
+<p><strong>This is why MD5 is not recommended.</strong> Use SHA-256 instead. SHA-256 is far more resistant to collisions.</p>
+<h3 id="how-websites-use-hashing-for-passwords">How Websites Use Hashing for Passwords</h3>
+<p>This was one of the most practically useful things from this week.</p>
+<p>When you create an account on a website and set a password, a secure website does not save your actual password. Instead, it calculates the hash of your password and saves that in its database.</p>
+<p>Here is how the login process works:
+1. You type your password to log in
+2. The website calculates the hash of whatever you just typed
+3. It compares that hash to the hash it has stored in its database
+4. If they match, login successful. If not, incorrect password.</p>
+<p>This means even if someone hacks the database and steals it, they do not get your actual passwords — they only get the hashes. And since hashing is one-directional, they cannot reverse the hashes back into the original passwords.</p>
+<h3 id="salting-and-peppering">Salting and Peppering</h3>
+<p>There is one more layer on top of this called salting.</p>
+<p>Before hashing your password, the website adds a random string of characters to your password. So instead of hashing "mypassword", it hashes "mypassword" + some random characters specific to you. That combination gets hashed and stored.</p>
+<p>This protects against attackers who might try to pre-calculate hashes for common passwords and then compare them against a stolen database.</p>
+<p><strong>Salt</strong> — Random characters added per user. Each user gets a different salt.
+<strong>Pepper</strong> — Similar idea but the same value is applied to all users.</p>
+<h3 id="verifying-file-downloads-using-hashes">Verifying File Downloads Using Hashes</h3>
+<p>A practical real-world use of hashing: when you download software from a legitimate website, most of them will publish the hash of the file alongside the download.</p>
+<p>Wireshark does this — they have a signatures file on their website that lists the expected hash for each version of their software. After downloading the file, you calculate the hash yourself. If your hash matches what is on their website, you downloaded the correct file. If they do not match, the file was either modified or corrupted somewhere along the way.</p>
+<hr />
+<h2 id="key-differences-encryption-vs-hashing">Key Differences: Encryption vs Hashing</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Encryption</th>
+<th>Hashing</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Direction</td>
+<td>Two-way (reversible)</td>
+<td>One-way (not reversible)</td>
+</tr>
+<tr>
+<td>Purpose</td>
+<td>Hiding data in transit</td>
+<td>Verifying data integrity</td>
+</tr>
+<tr>
+<td>Key needed</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Can be reversed</td>
+<td>Yes, with the right key</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="what-i-practiced-this-week">What I Practiced This Week</h2>
+<ul>
+<li>Used CyberChef to encrypt and decrypt using Caesar cipher (symmetric)</li>
+<li>Used CyberChef to generate PGP key pairs and practice asymmetric encryption</li>
+<li>Participated in the class exercise where everyone encrypted a message using the shared public key and sent it to the instructor to decrypt</li>
+<li>Used HashCalc to calculate MD5 hashes for text strings and files</li>
+<li>Observed how a single space changes the entire hash value</li>
+<li>Calculated SHA-1 and SHA-256 alongside MD5 and compared the output lengths</li>
+</ul>
+<hr />
+<h2 id="what-i-want-to-revisit">What I Want to Revisit</h2>
+<ul>
+<li>Salting in more depth — I understand the concept but want to see a practical example</li>
+<li>How asymmetric encryption is used in HTTPS — I know the connection exists, want to understand it properly</li>
+<li>The difference between PGP and other asymmetric encryption standards</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.top", "search.suggest"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.3220b9d7.min.js"></script>
+      
+    
+  </body>
+</html>
