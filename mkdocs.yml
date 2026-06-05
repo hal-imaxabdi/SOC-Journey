@@ -1,0 +1,24 @@
+site_name: Halima's SOC Learning Journal
+site_description: Blue Team learning in public — SOC fundamentals, labs, and writeups
+site_author: Hal Abdi
+
+theme:
+  name: material
+  palette:
+    scheme: slate
+    primary: blue
+    accent: cyan
+  features:
+    - navigation.tabs
+    - navigation.top
+    - search.suggest
+
+nav:
+  - Home: README.md
+  - Week 01:
+    - Notes: week-01/notes.md
+    - Lab Writeup: week-01/lab-writeup.md
+    - Diagrams: week-01/diagrams/diagrams.md
+
+plugins:
+  - search
