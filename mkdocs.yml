@@ -30,6 +30,8 @@ nav:
     - Diagrams: week-01/diagrams/diagrams.md
   - Week 02:
     - Notes: week-02/notes.md
+  - Week 03:
+    - Notes: week-03/notes.md
 
 plugins:
   - search
